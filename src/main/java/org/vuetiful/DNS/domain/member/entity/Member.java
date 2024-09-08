@@ -15,7 +15,7 @@ public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
+    private Integer memberId;
 
     @Column(nullable = false, length = 50)
     private String email;
