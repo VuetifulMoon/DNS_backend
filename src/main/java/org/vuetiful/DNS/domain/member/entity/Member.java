@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.vuetiful.DNS.domain.BaseEntity;
+import org.vuetiful.DNS.domain.memberDmRoom.entity.MemberDmRoom;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,5 +36,11 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 10)
     @ColumnDefault("'local'")
     private String socialType;
+
+    @OneToMany(mappedBy = "member")
+    @ToString.Exclude
+    @Builder.Default
+    // TODO: @JsonIgnore 필요한가?
+    private List<MemberDmRoom> memberDmRooms = new ArrayList<>();
 
 }
