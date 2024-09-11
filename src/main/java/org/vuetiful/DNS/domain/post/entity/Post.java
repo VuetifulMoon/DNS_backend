@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.vuetiful.DNS.domain.BaseEntity;
 import org.vuetiful.DNS.domain.member.entity.Member;
+import org.vuetiful.DNS.domain.postImage.entity.PostImage;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +26,7 @@ public class Post extends BaseEntity {
 
     @Column(length = 1500)
     private String postContent;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<PostImage> postImages;
 }
