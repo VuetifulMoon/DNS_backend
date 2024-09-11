@@ -7,7 +7,7 @@ import org.vuetiful.DNS.domain.BaseEntity;
 
 @Entity
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
