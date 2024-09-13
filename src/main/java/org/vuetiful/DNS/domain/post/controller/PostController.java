@@ -2,6 +2,7 @@ package org.vuetiful.DNS.domain.post.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vuetiful.DNS.domain.post.dto.PostRequest;
@@ -14,8 +15,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<?> getPost() {
-        return ResponseEntity.ok().body(postService.readPost());
+    public ResponseEntity<?> getPost(@RequestParam int page) {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(postService.readPost(page));
     }
 
     @PostMapping

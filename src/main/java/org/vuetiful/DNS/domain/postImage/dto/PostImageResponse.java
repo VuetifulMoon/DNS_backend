@@ -13,5 +13,5 @@ import java.util.List;
 @ToString
 public class PostImageResponse {
     private Integer imageId;
-    private MultipartFile image;
+    private String imageUrl;
 }

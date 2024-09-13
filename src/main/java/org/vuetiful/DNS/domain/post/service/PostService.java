@@ -2,6 +2,9 @@ package org.vuetiful.DNS.domain.post.service;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.vuetiful.DNS.domain.post.dto.PostRequest;
 import org.vuetiful.DNS.domain.post.dto.PostResponse;
@@ -15,8 +18,9 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
 
-    public List<PostResponse> readPost() {
-        return postRepository.findAll().stream().map(post -> new PostResponse(post)).toList();
+    public Slice<PostResponse> readPost(int page) {
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        return postRepository.findSliceBy(pageRequest).map(post -> new PostResponse(post));
     }
 
     public void createPost(PostRequest postRequest) {

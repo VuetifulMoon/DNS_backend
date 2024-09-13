@@ -1,10 +1,8 @@
 package org.vuetiful.DNS.domain.post.dto;
 
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.vuetiful.DNS.domain.post.entity.Post;
 import org.vuetiful.DNS.domain.postImage.dto.PostImageResponse;
-import org.vuetiful.DNS.domain.postImage.entity.PostImage;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +22,7 @@ public class PostResponse {
 
     private String nickname;
 
-    private MultipartFile profile;
+    private String profileUrl;
 
     private String postContent;
 
@@ -38,9 +36,9 @@ public class PostResponse {
         this.postContent = post.getPostContent();
         this.createdAt = post.getCreatedAt();
         this.nickname = post.getMember().getNickname();
-        this.profile = convertImage(post.getMember().getProfileImageUrl());
+        this.profileUrl = post.getMember().getProfileImageUrl();
         this.images = post.getPostImages().stream()
-                .map(postImage -> new PostImageResponse(postImage.getPostImageId() ,convertImage(postImage.getPostImageUrl())))
+                .map(postImage -> new PostImageResponse(postImage.getPostImageId(), postImage.getPostImageUrl()))
                 .collect(Collectors.toList());
     }
 }
