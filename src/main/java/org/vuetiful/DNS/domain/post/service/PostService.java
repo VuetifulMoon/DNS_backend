@@ -27,8 +27,13 @@ public class PostService {
         postRepository.save(postRequest.toEntity());
     }
 
-    public Integer modifyPost() {
-        return null;
+    public void modifyPost(int postId, PostRequest postRequest) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + postId));
+
+        post.update(postRequest);
+
+        postRepository.save(post);
     }
 
     public void removePost(int postId) {

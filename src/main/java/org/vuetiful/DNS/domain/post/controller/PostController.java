@@ -25,13 +25,15 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> patchPost() {
-        return null;
+    @PatchMapping("/{postId}")
+    public ResponseEntity<?> patchPost(@PathVariable int postId, PostRequest postRequest) {
+        postService.modifyPost(postId, postRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> deletePost(@RequestParam int postId) {
+    public ResponseEntity<?> deletePost(@PathVariable int postId) {
         postService.removePost(postId);
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

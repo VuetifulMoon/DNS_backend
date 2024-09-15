@@ -32,7 +32,7 @@ public class PostRequest {
                         .build())
                 .postImages(images.stream().map(image ->
                                 PostImage.builder()
-                                        .postImageUrl("/postImage/"+image.getOriginalFilename())
+                                        .postImageUrl("http://localhost:8080/postImage/"+image.getOriginalFilename())
                                         .build()
                         ).collect(Collectors.toList()))
                 .build();
