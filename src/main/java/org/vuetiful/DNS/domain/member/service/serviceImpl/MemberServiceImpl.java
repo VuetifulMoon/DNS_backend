@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
-    public String updateMember(Long memberId, MemberDTO memberDTO) {
+    public String updateMember(int memberId, MemberDTO memberDTO) {
         Member member = memberRepository.findById(memberId).orElseThrow();
         Member updateMember = member.toBuilder()
                 .nickname(memberDTO.getNickname())
