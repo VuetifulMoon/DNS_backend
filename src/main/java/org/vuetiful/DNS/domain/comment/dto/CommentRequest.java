@@ -9,6 +9,6 @@ import lombok.Setter;
 @Builder
 public class CommentRequest {
 
-    private Integer memberId;
+    private int memberId;
     private String commentContent;
 }

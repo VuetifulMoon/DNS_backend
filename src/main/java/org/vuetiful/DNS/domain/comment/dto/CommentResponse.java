@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class CommentResponse {
-    private Integer commentId;
-    private Integer postId;
+    private int commentId;
+    private int postId;
     private MemberProfile memberProfile;
     private String commentContent;
     private boolean isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Integer parentCommentId;
+    private int parentCommentId;
     private int childCommentCount;
 
 
