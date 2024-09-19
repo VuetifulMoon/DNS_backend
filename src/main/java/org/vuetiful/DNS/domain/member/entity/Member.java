@@ -43,4 +43,7 @@ public class Member extends BaseEntity {
     // TODO: @JsonIgnore 필요한가?
     private List<MemberDmRoom> memberDmRooms = new ArrayList<>();
 
+    public Member(Integer memberId) {
+        super();
+    }
 }

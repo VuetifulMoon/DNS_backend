@@ -35,7 +35,11 @@ public class Comment extends BaseEntity {
     private Comment parent;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-    private List<Comment> children;
+    @ToString.Exclude
+    private List<Comment> child;
+
+    @Column(nullable = false)
+    private int childCommentCount = 0;
 
     @Column(nullable = false, length = 300)
     private String commentContent;
@@ -47,6 +51,22 @@ public class Comment extends BaseEntity {
     private boolean isDeleted;
 
 
+    public void updateComment(String commentContent) {
+        this.commentContent = commentContent;
+    }
 
+    public void deleteComment() {
+        this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
+    }
 
+    public void incrementCount() {
+        this.childCommentCount++;
+    }
+
+    public void decrementCount() {
+        if (this.childCommentCount > 0) {
+            this.childCommentCount--;
+        }
+    }
 }
