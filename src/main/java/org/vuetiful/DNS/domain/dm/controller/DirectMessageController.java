@@ -21,7 +21,7 @@ public class DirectMessageController {
     public MessageResponse sendMessage(MessageRequest messageRequest) {
         messagingTemplate.convertAndSend("/sub/dm/" + messageRequest.getDmRoomId(), messageRequest);
 
-        directMessageService.saveMessage(messageRequest);
+        directMessageService.createMessage(messageRequest);
 
         return MessageResponse.builder()
                 .content(messageRequest.getContent())

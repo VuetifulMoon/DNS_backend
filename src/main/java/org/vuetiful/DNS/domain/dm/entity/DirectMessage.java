@@ -16,8 +16,8 @@ public class DirectMessage {
     @Id
     private String id;
 
-    private Integer dmRoomId;
-    private Integer senderId;
+    private int dmRoomId;
+    private int senderId;
     private String content;
     private LocalDateTime time;
 }

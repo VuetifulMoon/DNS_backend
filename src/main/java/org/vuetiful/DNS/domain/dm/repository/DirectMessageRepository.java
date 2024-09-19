@@ -9,5 +9,7 @@ import java.util.Optional;
 @Repository
 public interface DirectMessageRepository extends MongoRepository<DirectMessage, String> {
 
-    Optional<DirectMessage> findTop1ByDmRoomIdOrderByTimeDesc(Integer dmRoomId);
+    Optional<DirectMessage> findTop1ByDmRoomIdOrderByTimeDesc(int dmRoomId);
+
+    Optional<DirectMessage> findByDmRoomIdAndId(int dmRoomId, String Id);
 }

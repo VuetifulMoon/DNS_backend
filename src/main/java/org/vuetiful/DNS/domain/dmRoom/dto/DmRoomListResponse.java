@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 @Setter
 public class DmRoomListResponse {
 
-    private Integer dmRoomId;
-    private Integer memberId;
-    private String profileImage;
+    private int dmRoomId;
+    private int memberId;
+    private String profileImageUrl;
     private String nickname;
     private String recentMessage;
     private LocalDateTime recentMessageTime;
 
-    public DmRoomListResponse(Integer dmRoomId, Integer memberId, String profileImage, String nickname) {
+    public DmRoomListResponse(int dmRoomId, int memberId, String profileImageUrl, String nickname) {
         this.dmRoomId = dmRoomId;
         this.memberId = memberId;
-        this.profileImage = profileImage;
+        this.profileImageUrl = profileImageUrl;
         this.nickname = nickname;
     }
 

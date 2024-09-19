@@ -26,4 +26,10 @@ public class MemberDmRoom {
     @JoinColumn(name = "dm_room_id", nullable = false)
     private DmRoom dmRoom;
 
+
+    public MemberDmRoom(Member member, DmRoom dmRoom) {
+        this.member = member;
+        this.dmRoom = dmRoom;
+        this.memberDmRoomId = new MemberDmRoomId(member.getMemberId(), dmRoom.getDmRoomId());
+    }
 }

@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 public class MessageRequest {
 
-    private Integer dmRoomId;
-    private Integer senderId;
+    private int dmRoomId;
+    private int senderId;
     private String content;
     private LocalDateTime time;
 

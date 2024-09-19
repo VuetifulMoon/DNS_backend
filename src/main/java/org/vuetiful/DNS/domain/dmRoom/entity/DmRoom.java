@@ -26,4 +26,7 @@ public class DmRoom extends BaseEntity {
     // TODO: @JsonIgnore 필요한가?
     private List<MemberDmRoom> memberDmRooms = new ArrayList<>();
 
+    public DmRoom(List<MemberDmRoom> memberDmRooms) {
+        this.memberDmRooms = memberDmRooms;
+    }
 }

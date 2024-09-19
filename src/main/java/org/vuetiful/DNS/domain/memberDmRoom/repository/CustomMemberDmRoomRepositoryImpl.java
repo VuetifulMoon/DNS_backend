@@ -28,7 +28,7 @@ public class CustomMemberDmRoomRepositoryImpl implements CustomMemberDmRoomRepos
      * @param memberId 사용자 memberId
      * @return dmRoomId, 상대방 프로필, 최근 메세지와 시간
      */
-    public List<DmRoomListResponse> findRoomList(Integer memberId) {
+    public List<DmRoomListResponse> findRoomList(int memberId) {
         List<DmRoomListResponse> results = queryFactory.select(Projections.constructor(DmRoomListResponse.class,
                 qDmRoom.dmRoomId))
                 .from(qMemberDmRoom)
@@ -37,7 +37,7 @@ public class CustomMemberDmRoomRepositoryImpl implements CustomMemberDmRoomRepos
                 .fetch();
 
         results.forEach(response -> {
-            Integer dmRoomId = response.getDmRoomId();
+            int dmRoomId = response.getDmRoomId();
 
             MemberProfile otherMemberProfile = findOtherMemberProfile(memberId, dmRoomId);
             response.setMemberId(otherMemberProfile.getMemberId());
@@ -64,7 +64,7 @@ public class CustomMemberDmRoomRepositoryImpl implements CustomMemberDmRoomRepos
      * @param dmRoomId 채팅방 dmRoomId
      * @return 상대방 프로필 (memberId, profileImageUrl, nickname)
      */
-    public MemberProfile findOtherMemberProfile(Integer memberId, Integer dmRoomId) {
+    public MemberProfile findOtherMemberProfile(int memberId, int dmRoomId) {
         return queryFactory
                 .select(Projections.fields(MemberProfile.class,
                         qMember.memberId,
