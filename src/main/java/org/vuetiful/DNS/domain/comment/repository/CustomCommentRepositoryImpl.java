@@ -16,10 +16,10 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository {
 
     private final JPAQueryFactory queryFactory;
 
+    private final QComment qComment = QComment.comment;
+
     @Override
     public Slice<Comment> findSliceByPost_PostIdAndParentIsNull(int postId, Integer lastCommentId, Pageable pageable) {
-        QComment qComment = QComment.comment;
-
         JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
                 .where(qComment.post.postId.eq(postId)
                         .and(qComment.parent.isNull()))
@@ -31,6 +31,28 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository {
 
         List<Comment> results = query
                 .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1)
+                .fetch();
+
+        boolean hasNext = results.size() > pageable.getPageSize();
+        if (hasNext) {
+            results.remove(results.size() - 1);
+        }
+
+        return new SliceImpl<>(results, pageable, hasNext);
+    }
+
+    @Override
+    public Slice<Comment> findSliceByParent_CommentId(int postId, int parentCommentId, Integer lastCommentId, Pageable pageable) {
+        JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
+                .where(qComment.post.postId.eq(postId)
+                        .and(qComment.parent.commentId.eq(parentCommentId)));
+
+        if (lastCommentId != null) {
+            query.where(qComment.commentId.gt(lastCommentId));
+        }
+
+        List<Comment> results = query
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
 

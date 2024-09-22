@@ -73,16 +73,18 @@ public class CommentService {
     }
 
     // 대댓글 조회
-    public Page<CommentResponse> readNestedComments(int postId, int parentCommentId, int page, int size) {
+    public SliceResponse<CommentResponse> readNestedComments(int postId, int parentCommentId, Integer lastCommentId, int size) {
         validatePostId(postId);
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt"));
+        PageRequest pageRequest = PageRequest.of(0, size, Sort.by("createdAt"));
 
-        Page<Comment> nestedComments = commentRepository.findByParent_CommentId(parentCommentId, pageRequest);
+        Slice<Comment> commentsSlice = customCommentRepository.findSliceByParent_CommentId(postId, parentCommentId, lastCommentId, pageRequest);
 
-        if (nestedComments.isEmpty() && page > 0) { throw new GlobalException(ErrorCode.OUT_OF_RANGE); }
+        if (commentsSlice.isEmpty() && lastCommentId != null) {
+            throw new GlobalException(ErrorCode.OUT_OF_RANGE);
+        }
 
-        return nestedComments.map(CommentResponse::fromEntity);
+        return new SliceResponse<>(commentsSlice.map(CommentResponse::fromEntity));
     }
 
     // 댓글 등록

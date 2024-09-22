@@ -27,11 +27,11 @@ public class CommentController {
 
     // 대댓글 조회
     @GetMapping("/{commentId}")
-    public Page<CommentResponse> getComments(@PathVariable int postId,
+    public SliceResponse<CommentResponse> getComments(@PathVariable int postId,
                                              @PathVariable int commentId,
-                                             @RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int limit) {
-        return commentService.readNestedComments(postId, commentId, page, limit);
+                                             @RequestParam(required = false) Integer lastCommentId,
+                                             @RequestParam(defaultValue = "10") int size) {
+        return commentService.readNestedComments(postId, commentId, lastCommentId, size);
     }
 
     // 댓글 등록
