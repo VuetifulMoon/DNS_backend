@@ -17,7 +17,7 @@ public class CommentResponse {
     private boolean isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private int parentCommentId;
+    private Integer parentCommentId;
     private int childCommentCount;
 
 

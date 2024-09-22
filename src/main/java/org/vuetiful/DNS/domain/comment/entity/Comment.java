@@ -31,7 +31,7 @@ public class Comment extends BaseEntity {
 
     // 순환 참조 - 부모
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nestedCommentId")
+    @JoinColumn(name = "parentCommentId")
     private Comment parent;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
