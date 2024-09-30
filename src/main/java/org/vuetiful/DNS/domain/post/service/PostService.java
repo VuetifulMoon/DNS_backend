@@ -12,14 +12,15 @@ import org.vuetiful.DNS.domain.post.entity.Post;
 import org.vuetiful.DNS.domain.post.repository.PostRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
 
-    public Slice<PostResponse> readPost(int page) {
-        PageRequest pageRequest = PageRequest.of(page, 10);
+    public Slice<PostResponse> readPost(int lastIndex) {
+        PageRequest pageRequest = PageRequest.of(lastIndex, 10);
         return postRepository.findSliceBy(pageRequest).map(post -> new PostResponse(post));
     }
 
@@ -29,7 +30,7 @@ public class PostService {
 
     public void modifyPost(int postId, PostRequest postRequest) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. id=" + postId));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + postId));
 
         post.update(postRequest);
 
