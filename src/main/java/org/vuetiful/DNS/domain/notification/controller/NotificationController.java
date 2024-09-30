@@ -27,7 +27,11 @@ public class NotificationController {
 
     @GetMapping(value = "/{memberId}")
     public List<NoticeResponse> readAll(@PathVariable int memberId) {
-        System.out.println(notificationService.allNotice(memberId));
         return notificationService.allNotice(memberId);
+    }
+
+    @PostMapping(value = "/{notificationId}")
+    public void check(@PathVariable int notificationId) {
+        notificationService.check(notificationId);
     }
 }

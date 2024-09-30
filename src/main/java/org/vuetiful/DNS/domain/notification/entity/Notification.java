@@ -25,4 +25,8 @@ public class Notification {
 
     @Column
     private boolean readStatus;
+
+    public void check() {
+        readStatus = true;
+    }
 }

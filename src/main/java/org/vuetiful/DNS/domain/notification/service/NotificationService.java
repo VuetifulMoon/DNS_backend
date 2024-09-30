@@ -41,6 +41,14 @@ public class NotificationService {
                 new NoticeResponse(notice)).toList();
     }
 
+    public void check(int notificationId) {
+        Notification notice = notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 알림이 없습니다. id=" + notificationId));
+
+        notice.check();
+        notificationRepository.save(notice);
+    }
+
     public void dmNotice(int receiverId) {
         if(NotificationController.sseEmitters.containsKey(receiverId)){
             SseEmitter sseEmitterReceiver = NotificationController.sseEmitters.get(receiverId);
