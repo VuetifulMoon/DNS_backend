@@ -41,7 +41,7 @@ public class DmRoomController {
      * @return dmRoomId, 상대방 프로필, 전체 메세지
      */
     @GetMapping("/dm-rooms/{dmRoomId}")
-    public DmRoomDetailResponse getMessages(@RequestBody DmRoomDetailRequest dmRoomDetailRequest,
+    public DmRoomDetailResponse getMessages(@RequestParam DmRoomDetailRequest dmRoomDetailRequest,
                                             @RequestParam(required = false) String lastMessageId,
                                             @RequestParam(defaultValue = "30") int size) {
         return dmRoomService.readDmRoomDetail(
