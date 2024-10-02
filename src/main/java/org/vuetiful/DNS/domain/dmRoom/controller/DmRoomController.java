@@ -41,11 +41,19 @@ public class DmRoomController {
      * @return dmRoomId, 상대방 프로필, 전체 메세지
      */
     @GetMapping("/dm-rooms/{dmRoomId}")
-    public DmRoomDetailResponse getMessages(@RequestParam DmRoomDetailRequest dmRoomDetailRequest,
+    public DmRoomDetailResponse getMessages(@PathVariable int dmRoomId,
+                                            @RequestParam int memberId,
+                                            @RequestParam String profileImageUrl,
+                                            @RequestParam String nickname,
                                             @RequestParam(required = false) String lastMessageId,
                                             @RequestParam(defaultValue = "30") int size) {
-        return dmRoomService.readDmRoomDetail(
-                dmRoomDetailRequest.getDmRoomId(), dmRoomDetailRequest.getMemberProfile(), lastMessageId, size);
+        MemberProfile memberProfile = MemberProfile.builder()
+                .memberId(memberId)
+                .profileImageUrl(profileImageUrl)
+                .nickname(nickname)
+                .build();
+
+        return dmRoomService.readDmRoomDetail(dmRoomId, memberProfile, lastMessageId, size);
     }
 
     /**
