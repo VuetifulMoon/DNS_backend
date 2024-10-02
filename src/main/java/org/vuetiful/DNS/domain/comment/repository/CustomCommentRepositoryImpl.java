@@ -1,5 +1,6 @@
 package org.vuetiful.DNS.domain.comment.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +21,22 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository {
 
     @Override
     public Slice<Comment> findSliceByPost_PostIdAndParentIsNull(int postId, Integer lastCommentId, Pageable pageable) {
-        JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
-                .where(qComment.post.postId.eq(postId)
-                        .and(qComment.parent.isNull()))
-                .orderBy(qComment.createdAt.desc());
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(qComment.post.postId.eq(postId));
+        builder.and(qComment.parent.isNull());
 
         if (lastCommentId != null) {
-            query.where(qComment.commentId.lt(lastCommentId));
+            builder.and(qComment.commentId.lt(lastCommentId));
         }
 
-        List<Comment> results = query
+        JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
+                .where(builder)
+                .orderBy(qComment.createdAt.desc())
                 .offset(pageable.getOffset())
-                .limit(pageable.getPageSize() + 1)
-                .fetch();
+                .limit(pageable.getPageSize() + 1);
+
+        List<Comment> results = query.fetch();
 
         boolean hasNext = results.size() > pageable.getPageSize();
         if (hasNext) {
@@ -44,17 +48,20 @@ public class CustomCommentRepositoryImpl implements CustomCommentRepository {
 
     @Override
     public Slice<Comment> findSliceByParent_CommentId(int postId, int parentCommentId, Integer lastCommentId, Pageable pageable) {
-        JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
-                .where(qComment.post.postId.eq(postId)
-                        .and(qComment.parent.commentId.eq(parentCommentId)));
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(qComment.post.postId.eq(postId));
+        builder.and(qComment.parent.commentId.eq(parentCommentId));
 
         if (lastCommentId != null) {
-            query.where(qComment.commentId.gt(lastCommentId));
+            builder.and(qComment.commentId.gt(lastCommentId));
         }
 
-        List<Comment> results = query
-                .limit(pageable.getPageSize() + 1)
-                .fetch();
+        JPAQuery<Comment> query = queryFactory.selectFrom(qComment)
+                .where(builder)
+                .limit(pageable.getPageSize() + 1);
+
+        List<Comment> results = query.fetch();
 
         boolean hasNext = results.size() > pageable.getPageSize();
         if (hasNext) {
