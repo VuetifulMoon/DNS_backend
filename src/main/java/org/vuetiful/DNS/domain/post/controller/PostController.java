@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.vuetiful.DNS.domain.post.dto.PostRequest;
 import org.vuetiful.DNS.domain.post.service.PostService;
 
+import java.util.List;
+
 import java.io.IOException;
 
 @RestController
