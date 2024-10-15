@@ -26,13 +26,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> postPost(@RequestBody PostRequest postRequest) throws IOException {
-        for(int i=0; i<postRequest.getImages().size(); i++) {
-            String fileName = postRequest.getImages().get(i).getOriginalFilename();
-            String fullPathName = "/Users/jeong-yong-an/Desktop/DNS_backend/src/main/resources/static/postImage/" + fileName;
-            postRequest.getImages().get(i).transferTo(new File(fullPathName));
-        }
-
+    public ResponseEntity<?> postPost(@ModelAttribute PostRequest postRequest) throws IOException {
         postService.createPost(postRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
