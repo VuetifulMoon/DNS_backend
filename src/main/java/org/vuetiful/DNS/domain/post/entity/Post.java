@@ -34,10 +34,13 @@ public class Post extends BaseEntity {
 
     public void update(PostRequest postRequest) {
         this.postContent = postRequest.getPostContent();
-        this.postImages = postRequest.getImages().stream().map(image ->
-                PostImage.builder()
-                        .postImageUrl("http://localhost:8080/postImage/"+image.getOriginalFilename())
-                        .build()
-        ).collect(Collectors.toList());
+        if(postRequest.getImages() != null){
+            this.postImages = postRequest.getImages().stream().map(image ->
+                    PostImage.builder()
+                            .postImageUrl("http://localhost:8080/postImage/"+image.getOriginalFilename())
+                            .build()
+            ).collect(Collectors.toList());
+        }
+
     }
 }
