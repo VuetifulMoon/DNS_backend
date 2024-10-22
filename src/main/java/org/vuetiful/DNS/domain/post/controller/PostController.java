@@ -32,7 +32,7 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    public ResponseEntity<?> patchPost(@PathVariable int postId, PostRequest postRequest) {
+    public ResponseEntity<?> patchPost(@PathVariable int postId, @ModelAttribute PostRequest postRequest) throws IOException {
         postService.modifyPost(postId, postRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
