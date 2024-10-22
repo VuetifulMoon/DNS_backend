@@ -46,7 +46,18 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + postId));
 
+        post.getPostImages().stream().forEach(i ->
+            postImageRepository.deleteById(i.getPostImageId()));
+
+        postRequest.getImages().stream().forEach(image ->
+                postImageRepository.save(PostImage.builder()
+                        .post(post)
+                        .postImageUrl("http://localhost:8080/postImage/"+image.getOriginalFilename())
+                        .build())
+        );
+
         post.update(postRequest);
+
 
         if (postRequest.getImages() != null){
             for(int i=0; i<postRequest.getImages().size(); i++){
