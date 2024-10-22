@@ -42,11 +42,21 @@ public class PostService {
 
     }
 
-    public void modifyPost(int postId, PostRequest postRequest) {
+    public void modifyPost(int postId, PostRequest postRequest) throws IOException {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + postId));
 
         post.update(postRequest);
+
+        if (postRequest.getImages() != null){
+            for(int i=0; i<postRequest.getImages().size(); i++){
+                String fileName = postRequest.getImages().get(i).getOriginalFilename();
+                String fullPathName = "/Users/jeong-yong-an/Desktop/DNS_backend/src/main/resources/static/postImage/" + fileName;
+                postRequest.getImages().get(i).transferTo(new File(fullPathName));
+            }
+        }
+
+
 
         postRepository.save(post);
     }
